@@ -148,9 +148,9 @@ case $1 in
         ;;
     *)  #使用帮助;
         clear
-        printf "\t${Red}#++++++++++++++++++++#${cls}\n\a"
-        printf "\t${Yellow}#装B专属,炫酷键盘灯效;${cls}\n"
-        printf "\t${Red}#++++++++++++++++++++#${cls}\n"
+        printf "\t${Red}#++++++++++++++++++++#${Cls}\n\a"
+        printf "\t${Yellow}#装B专属,炫酷键盘灯效;${Cls}\n"
+        printf "\t${Red}#++++++++++++++++++++#${Cls}\n"
         printf "装B神器,共计<--${Red}6${Cls}-->${Green}种模式,待我细细到来;${Cls}\n"
         printf "<--${Green}0${Cls}-->${Blue}闪烁模式,一直闪啊闪的;${Cls}\n"
         printf "<--${Blue}1${Cls}-->${White}循环变化模式,灯光颜色变啊变哦;${Cls}\n"
