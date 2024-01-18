@@ -34,10 +34,12 @@ Led_color=(
     '0 255 0'       #绿;
 )
 
+# Led 灭;
 Led_Low() {
     echo '0' >${Kernel_led_mode}/brightness
 }
 
+# Led 亮;
 Led_High() {
     echo '255' >${Kernel_led_mode}/brightness
 }
@@ -46,10 +48,10 @@ Led_High() {
 Led_init() {
     x=$1
     Led_High
+
     while ((x--)); do
-        for ((a=0;a<=${#Led_color[*]}-1;a++)); do
-            echo ${Led_color[$a]} >${Kernel_led_mode}/multi_intensity
-            echo ${Led_color[$a]}
+        for i in "${Led_color[@]}"; do
+            echo $i >${Kernel_led_mode}/multi_intensity
             sleep 0.3
         done
     done
@@ -68,7 +70,7 @@ case $1 in
     1)  #渐变模式;
         while ((1))
         do
-            echo '255' > ${Kernel_led_mode}/brightness
+            Led_High
             for ((color=1;color<${#Led_color[@]};++color))      #干掉0X000000;
             do
                 for color_file in `ls -1 ${Kernel_led_mode}/color_*`
@@ -82,9 +84,9 @@ case $1 in
     2)  #单色呼吸灯模式;
         while ((1))
         do
-            echo '255' > ${Kernel_led_mode}/brightness
+            Led_High
             for ((i=255;i>=0;--i)); do
-                sleep '0.02'        #0.03,贤惠温柔级,0.1,少妇级,0.01,风骚级;
+                sleep '0.02'
                 echo "${i}" > ${Kernel_led_mode}/brightness
                 if (( ${i}==0 )); then
                     for ((m=${i};m<=255;++m)); do
@@ -100,7 +102,7 @@ case $1 in
         do
             for ((color=1;color<${#Led_color[@]};++color))      #干掉0X000000;
             do
-                echo '255' > ${Kernel_led_mode}/brightness
+                Led_High
                 for color_file in `ls -1 ${Kernel_led_mode}/color_*`
                 do
                     echo "${Led_color[color]}" > ${color_file}
@@ -117,7 +119,7 @@ case $1 in
         do
             for ((color=1;color<${#Led_color[@]};++color))      #干掉0X000000;
             do
-                echo '255' > ${Kernel_led_mode}/brightness
+                Led_High
                 for color_file in `ls -1 ${Kernel_led_mode}/color_*`
                 do
                     echo "${Led_color[color]}" > ${color_file}
