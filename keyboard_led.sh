@@ -14,6 +14,7 @@ Purple="\033[1;35m" ;    Cyan_blue="\033[1;36m"
 Kernel_led_mode='/sys/devices/platform/tuxedo_keyboard/leds/rgb:kbd_backlight'
 readonly Kernel_led_mode
 
+
 #|-----|----|------------|
 #| 0   | 0  | 255   -> 蓝|
 #| 255 | 255| 0     -> 黄| 
@@ -177,10 +178,10 @@ case $1 in
             fi
         fi
         ;;
-    close)
+    Low)
         Led_Low
         ;;
-    open)
+    High)
         Led_High
         ;;
     init)
