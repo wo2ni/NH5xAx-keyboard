@@ -47,9 +47,10 @@ Led_High() {
 # 获取当前Led颜色;
 Get_color() {
     now_color=$(cat ${Kernel_led_mode}/multi_intensity)
-    readonly new_color
+    echo ${new_color}
 }
 
+# 获取当前Led亮度;
 Get_brig() {
     now_brig=$(cat ${Kernel_led_mode}/brightness)
     echo ${now_brig}
