@@ -134,7 +134,7 @@ case $1 in
             done
         done
         ;;
-    6)  #按键盘灯光现,且没次灯光不一样,美就完了;
+    6)  #按键盘灯光现,且没次灯光不一样;
         while ((1))
         do
             echo '0' > ${Kernel_led_mode}/state
