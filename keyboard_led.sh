@@ -162,14 +162,14 @@ case $1 in
     *)  #使用帮助;
         clear
         printf "\t${Red}#++++++++++++++++++++#${Cls}\n\a"
-        printf "\t${Yellow}#NH5xAx,炫酷键盘灯效;${Cls}\n"
+        printf "\t${Yellow}#NH5xAx,炫酷键盘灯效.${Cls}\n"
         printf "\t${Red}#++++++++++++++++++++#${Cls}\n"
-        printf "共计<--${Red}6${Cls}-->${Green}种模式:${Cls}\n"
-        printf "<--${Green}0${Cls}-->${Blue}单色闪烁模式;${Cls}\n"
-        printf "<--${Blue}1${Cls}-->${White}循环变化模式;${Cls}\n"
-        printf "<--${White}2${Cls}-->${Cyan_blue}单色呼吸模式;${Cls}\n"
-        printf "<--${Cyan_blue}3${Cls}-->${Yellow}循环变色+呼吸灯<模式0>;${Cls}\n"
-        printf "<--${Yellow}5${Cls}-->${Purple}循环变色+呼吸灯<模式1>;${Cls}\n"
-        printf "<--${Purple}6${Cls}-->${Red}按键盘任意键,亮灯光,<测试模式>;${Cls}\n"
+        printf "共计<--${Red}6${Cls}-->${Green}种模式.${Cls}\n"
+        printf "<--${Green}0${Cls}-->${Blue}单色闪烁模式.${Cls}\n"
+        printf "<--${Blue}1${Cls}-->${White}循环变化模式.${Cls}\n"
+        printf "<--${White}2${Cls}-->${Cyan_blue}单色呼吸模式.${Cls}\n"
+        printf "<--${Cyan_blue}3${Cls}-->${Yellow}循环变色+呼吸灯<模式0>.${Cls}\n"
+        printf "<--${Yellow}5${Cls}-->${Purple}循环变色+呼吸灯<模式1>.${Cls}\n"
+        printf "<--${Purple}6${Cls}-->${Red}按键盘任意键,亮灯光,<测试模式>.${Cls}\n"
         ;;
 esac
