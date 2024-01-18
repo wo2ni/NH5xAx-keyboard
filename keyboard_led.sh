@@ -34,10 +34,18 @@ Led_color=(
     '0 255 0'       #绿;
 )
 
+Led_Low() {
+    echo '0' >${Kernel_led_mode}/brightness
+}
+
+Led_High() {
+    echo '255' >${Kernel_led_mode}/brightness
+}
+
 #Led初始化操作暴闪;
 Led_init() {
     x=$1
-    echo '255' >${Kernel_led_mode}/brightness
+    Led_High
     while ((x--)); do
         for ((a=0;a<=${#Led_color[*]}-1;a++)); do
             echo ${Led_color[$a]} >${Kernel_led_mode}/multi_intensity
@@ -174,7 +182,10 @@ case $1 in
         done
         ;;
     close)
-        echo '0' >"${Kernel_led_mode}/brightness"
+        Led_Low
+        ;;
+    open)
+        Led_High
         ;;
     init)
         Led_init 3
