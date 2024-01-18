@@ -111,51 +111,25 @@ case $1 in
             done
         done
         ;;
-    5)  #渐变模式+呼吸灯+熄灭时变色+温柔提颜色亮度,--温柔小姐姐型;
+    5)  #渐变模式+呼吸灯+熄灭时变色+提颜色亮度;
+        Led_High
         while ((1))
         do
-            for ((color=1;color<${#Led_color[@]};++color))      #干掉0X000000;
-            do
-                Led_High
-                for color_file in `ls -1 ${Kernel_led_mode}/color_*`
-                do
-                    echo "${Led_color[color]}" > ${color_file}
-                done
+            x=0
+            for i in  "${Led_color[@]}"; do
+                echo $i > ${Kernel_led_mode}/multi_intensity
                 for ((L=255;L!=0;--L)); do          
                     sleep '0.02'          #温柔的灭;  
                     echo "${L}" > ${Kernel_led_mode}/brightness
                 done
                 if (( $L==0 )); then
-                    echo '0' > ${Kernel_led_mode}/brightness
-                    #echo 数组下标:${color}
-                    case ${color} in        #核心变色;
-                        7)
-                            new_color='8'
-                            ((new_color-=$color))
-                            #echo 新的${new_color}
-                            for Low_color_file in `ls -1 ${Kernel_led_mode}/color_*`
-                            do
-                                echo "${Led_color[${new_color}]}" > ${Low_color_file}
-                            done
-                            for ((H=0;H!=255;++H)); do
-                                sleep '0.01'        #温柔的亮;
-                                echo "${H}" > ${Kernel_led_mode}/brightness
-                            done
-                            ;;
-                        *)
-                            new_color='1'
-                            ((new_color+=$color))
-                            #echo 新的${new_color}
-                            for Low_color_file in `ls -1 ${Kernel_led_mode}/color_*`
-                            do
-                                echo "${Led_color[${new_color}]}" > ${Low_color_file}
-                            done
-                            for ((H=0;H!=255;++H)); do
-                                sleep '0.01'        #温柔的亮;
-                                echo "${H}" > ${Kernel_led_mode}/brightness
-                            done
-                            ;;
-                    esac
+                    Led_Low
+                    ((x+=1))
+                    echo ${Led_color[$x]}> ${Kernel_led_mode}/multi_intensity
+                    for ((H=$L;H<=255;H++)); do
+                        echo $H >${Kernel_led_mode}/brightness
+                        sleep '0.02'
+                    done
                 fi
             done
         done
