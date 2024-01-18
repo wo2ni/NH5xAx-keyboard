@@ -44,6 +44,12 @@ Led_High() {
     echo '255' >${Kernel_led_mode}/brightness
 }
 
+# 获取当前Led颜色;
+Get_color() {
+    now_color=$(cat ${Kernel_led_mode}/multi_intensity)
+    readonly new_color
+}
+
 #Led初始化操作暴闪;
 Led_init() {
     x=$1
@@ -68,16 +74,12 @@ case $1 in
         done
         ;;
     1)  #渐变模式;
+        Led_High
         while ((1))
         do
-            Led_High
-            for ((color=1;color<${#Led_color[@]};++color))      #干掉0X000000;
-            do
-                for color_file in `ls -1 ${Kernel_led_mode}/color_*`
-                do
-                    echo "${Led_color[color]}" > ${color_file}
-                done
-                sleep '0.3'
+            for i in "${Led_color[@]}"; do
+                echo $i >${Kernel_led_mode}/multi_intensity
+                sleep 1
             done
         done
         ;;
@@ -97,16 +99,11 @@ case $1 in
             done
         done
         ;;
-    3)  #渐变模式+呼吸灯,熄灭时变色,--饥渴少妇型;
-        while ((1))
-        do
-            for ((color=1;color<${#Led_color[@]};++color))      #干掉0X000000;
-            do
-                Led_High
-                for color_file in `ls -1 ${Kernel_led_mode}/color_*`
-                do
-                    echo "${Led_color[color]}" > ${color_file}
-                done
+    3)  #渐变模式+呼吸灯,熄灭时变色;
+        while ((1)); do
+            Led_High
+            for i in  "${Led_color[@]}"; do
+                echo $i > ${Kernel_led_mode}/multi_intensity
                 for ((i=255;i>=0;--i)); do
                     sleep '0.03'        #温柔的灭;
                     echo "${i}" > ${Kernel_led_mode}/brightness
