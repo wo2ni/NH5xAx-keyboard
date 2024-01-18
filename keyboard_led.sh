@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
-#
-#++++++++++++++#
-#--炫酷键盘灯效;
-#++++++++++++++#
+
+#++++++++++++++++++++#
+#--NH5xAx炫酷键盘灯效;
+#++++++++++++++++++++#
 
 #--Color Code;
 Cls="\033[0m"       ;    White="\033[1;38m"
@@ -59,9 +59,9 @@ case $1 in
     0)  #单色闪烁模式;
         while ((1))
         do
-            echo '255' > ${Kernel_led_mode}/brightness
+            Led_High
             sleep 1
-            echo '0' > ${Kernel_led_mode}/brightness
+            Led_Low
             sleep 1
         done
         ;;
