@@ -11,14 +11,26 @@ Yellow="\033[1;33m" ;    Blue="\033[1;34m"
 Purple="\033[1;35m" ;    Cyan_blue="\033[1;36m"
 
 #--Kernel PATH;
-Kernel_led_mode='/sys/devices/platform/tuxedo_keyboard';readonly Kernel_led_mode
+Kernel_led_mode='/sys/devices/platform/tuxedo_keyboard/leds/rgb:kbd_backlight';readonly Kernel_led_mode
 
-#0XFF0000 -> 红;#0X00FF00 -> 绿;#0X0000FF -> 蓝;#0XFFFF00 -> 黄;
-#0XFF00FF -> 粉;#0X00FFFF -> 青;#0XFFFFFF -> 白;#0X000000 -> 无;
+#|-----|----|------------|
+#| 0   | 0  | 255   -> 蓝|
+#| 255 | 255| 0     -> 黄| 
+#| 255 | 0  | 255   -> 粉|
+#| 0   | 255| 255   -> 青|
+#| 255 | 255| 255   -> 白|
+#| 255 | 0  | 0     -> 红|
+#| 0   | 255| 0     -> 绿|
+#|-----|----|------------|
 
 Led_color=(
-    0X000000 0XFFFFFF 0X0000FF 0XFFFF00 
-    0XFF00FF 0X00FFFF 0XFF0000 0X00FF00 
+    '0   0   255'       #蓝;
+    '255 255 0'         #黄;
+    '255 0   255'       #粉;
+    '0   255 255'       #青;
+    '255 255 255'       #白;
+    '255 0   0'         #红;
+    '0   255 0'         #绿;
 )
 
 case $1 in
@@ -26,8 +38,9 @@ case $1 in
         while ((1))
         do
             echo '255' > ${Kernel_led_mode}/brightness
-            echo '1' > ${Kernel_led_mode}/state;sleep '1'
-            echo '0' > ${Kernel_led_mode}/state; sleep '0.2'
+            sleep 1
+            echo '0' > ${Kernel_led_mode}/brightness
+            sleep 1
         done
         ;;
     1)  #渐变模式;
