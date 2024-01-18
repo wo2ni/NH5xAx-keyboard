@@ -164,7 +164,7 @@ case $1 in
         printf "\t${Red}#++++++++++++++++++++#${Cls}\n\a"
         printf "\t${Yellow}#NH5xAx,炫酷键盘灯效;${Cls}\n"
         printf "\t${Red}#++++++++++++++++++++#${Cls}\n"
-        printf "装B神器,共计<--${Red}6${Cls}-->${Green}种模式,待我细细到来;${Cls}\n"
+        printf "共计<--${Red}6${Cls}-->${Green}种模式:${Cls}\n"
         printf "<--${Green}0${Cls}-->${Blue}闪烁模式,一直闪啊闪的;${Cls}\n"
         printf "<--${Blue}1${Cls}-->${White}循环变化模式,灯光颜色变啊变哦;${Cls}\n"
         printf "<--${White}2${Cls}-->${Cyan_blue}单色呼吸模式;${Cls}\n"
