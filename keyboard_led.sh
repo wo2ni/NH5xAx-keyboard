@@ -50,6 +50,11 @@ Get_color() {
     readonly new_color
 }
 
+Get_brig() {
+    now_brig=$(cat ${Kernel_led_mode}/brightness)
+    echo ${now_brig}
+}
+
 #Led初始化操作暴闪;
 Led_init() {
     x=$1
@@ -148,6 +153,28 @@ case $1 in
                 fi
             done
         done
+        ;;
+    Up)
+        a=$(Get_brig)
+        if (($a<=255)); then
+            ((a+=5))
+            if (($a == 255)); then
+                a=255
+            else
+                echo $a >${Kernel_led_mode}/brightness
+            fi
+        fi
+        ;;
+    Down)
+        a=$(Get_brig)
+        if (($a>=0)); then
+            ((a-=5))
+            if (($a == -5)); then
+                a=0
+            else
+                echo $a >${Kernel_led_mode}/brightness
+            fi
+        fi
         ;;
     close)
         Led_Low
