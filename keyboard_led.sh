@@ -159,6 +159,12 @@ case $1 in
             done
         done
         ;;
+    close)
+        echo '0' >"${Kernel_led_mode}/brightness"
+        ;;
+    init)
+        echo '255' >"${Kernel_led_mode}/brightness"
+        ;;
     *)  #使用帮助;
         clear
         printf "\t${Red}#++++++++++++++++++++#${Cls}\n\a"
