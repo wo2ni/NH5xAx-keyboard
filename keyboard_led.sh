@@ -134,22 +134,17 @@ case $1 in
             done
         done
         ;;
-    6)  #按键盘灯光现,且没次灯光不一样;
+    6)  #按键盘灯光现,且每次灯光不一样;
+        Led_Low
         while ((1))
         do
-            echo '0' > ${Kernel_led_mode}/state
-            for ((color=1;color<${#Led_color[@]};++color))      #干掉0X000000;
-            do
-                for color_file in `ls -1 ${Kernel_led_mode}/color_*`    #灯光区域;
-                do
-                    echo "${Led_color[color]}" > ${color_file}
-                done
+            for i in  "${Led_color[@]}"; do
+                echo $i >${Kernel_led_mode}/multi_intensity
                 if [ ! ${in} ]; then
                     in="$(read -sn1 > /dev/null 2>&1 )"
-                    echo '255' > ${Kernel_led_mode}/brightness
-                    echo '1' > ${Kernel_led_mode}/state
-                    sleep '0.3'
-                    echo '0' > ${Kernel_led_mode}/state
+                    Led_High
+                    sleep '0.1'
+                    Led_Low
                 fi
             done
         done
