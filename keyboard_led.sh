@@ -11,7 +11,8 @@ Yellow="\033[1;33m" ;    Blue="\033[1;34m"
 Purple="\033[1;35m" ;    Cyan_blue="\033[1;36m"
 
 #--Kernel PATH;
-Kernel_led_mode='/sys/devices/platform/tuxedo_keyboard/leds/rgb:kbd_backlight';readonly Kernel_led_mode
+Kernel_led_mode='/sys/devices/platform/tuxedo_keyboard/leds/rgb:kbd_backlight'
+readonly Kernel_led_mode
 
 #|-----|----|------------|
 #| 0   | 0  | 255   -> 蓝|
@@ -24,14 +25,27 @@ Kernel_led_mode='/sys/devices/platform/tuxedo_keyboard/leds/rgb:kbd_backlight';r
 #|-----|----|------------|
 
 Led_color=(
-    '0   0   255'       #蓝;
-    '255 255 0'         #黄;
-    '255 0   255'       #粉;
-    '0   255 255'       #青;
-    '255 255 255'       #白;
-    '255 0   0'         #红;
-    '0   255 0'         #绿;
+    '0 0 255'       #蓝;
+    '255 255 0'     #黄;
+    '255 0 255'     #粉;
+    '0 255 255'     #青;
+    '255 255 255'   #白;
+    '255 0 0'       #红;
+    '0 255 0'       #绿;
 )
+
+#Led初始化操作暴闪;
+Led_init() {
+    x=$1
+    echo '255' >${Kernel_led_mode}/brightness
+    while ((x--)); do
+        for ((a=0;a<=${#Led_color[*]}-1;a++)); do
+            echo ${Led_color[$a]} >${Kernel_led_mode}/multi_intensity
+            echo ${Led_color[$a]}
+            sleep 0.3
+        done
+    done
+}
 
 case $1 in
     0)  #单色闪烁模式;
@@ -163,7 +177,7 @@ case $1 in
         echo '0' >"${Kernel_led_mode}/brightness"
         ;;
     init)
-        echo '255' >"${Kernel_led_mode}/brightness"
+        Led_init 3
         ;;
     *)  #使用帮助;
         clear
