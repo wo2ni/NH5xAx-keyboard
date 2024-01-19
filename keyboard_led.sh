@@ -34,14 +34,19 @@ Led_color=(
     '0 255 0'       #绿;
 )
 
+# Led 亮度;
+Led_Val() {
+    echo $1 >${Kernel_led_mode}/brightness
+}
+
 # Led 灭;
 Led_Low() {
-    echo '0' >${Kernel_led_mode}/brightness
+    Led_Val 0
 }
 
 # Led 亮;
 Led_High() {
-    echo '255' >${Kernel_led_mode}/brightness
+    Led_Val 255
 }
 
 # 获取当前Led颜色;
@@ -95,11 +100,11 @@ case $1 in
             Led_High
             for ((i=255;i>=0;--i)); do
                 sleep '0.02'
-                echo "${i}" > ${Kernel_led_mode}/brightness
+                Led_Val $i
                 if (( ${i}==0 )); then
                     for ((m=${i};m<=255;++m)); do
                         sleep '0.03'        
-                        echo "${m}" > ${Kernel_led_mode}/brightness
+                        Led_Val $m
                     done
                 fi
             done
@@ -111,8 +116,8 @@ case $1 in
             for i in  "${Led_color[@]}"; do
                 echo $i > ${Kernel_led_mode}/multi_intensity
                 for ((i=255;i>=0;--i)); do
-                    sleep '0.03'        #温柔的灭;
-                    echo "${i}" > ${Kernel_led_mode}/brightness
+                    sleep '0.03'
+                    Led_Val $i
                 done
             done
         done
@@ -126,14 +131,14 @@ case $1 in
                 echo $i > ${Kernel_led_mode}/multi_intensity
                 for ((L=255;L!=0;--L)); do          
                     sleep '0.02'          #温柔的灭;  
-                    echo "${L}" > ${Kernel_led_mode}/brightness
+                    Led_Val $L
                 done
                 if (( $L==0 )); then
                     Led_Low
                     ((x+=1))
                     echo ${Led_color[$x]}> ${Kernel_led_mode}/multi_intensity
                     for ((H=$L;H<=255;H++)); do
-                        echo $H >${Kernel_led_mode}/brightness
+                        Led_Val $H
                         sleep '0.02'
                     done
                 fi
@@ -162,7 +167,7 @@ case $1 in
             if (($a == 255)); then
                 a=255
             else
-                echo $a >${Kernel_led_mode}/brightness
+                Led_Val $a
             fi
         fi
         ;;
@@ -173,13 +178,16 @@ case $1 in
             if (($a == -15)); then
                 a=0
             else
-                echo $a >${Kernel_led_mode}/brightness
+                Led_Val $a
             fi
         fi
         ;;
     Switch)
+        new_val="$(Get_brig)"
+        readonly new_val
         if (($(Get_brig) == 0)); then
             Led_High
+            #Led_Val ${new_val}
         else
             Led_Low
         fi
