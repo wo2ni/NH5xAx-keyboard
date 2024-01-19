@@ -183,11 +183,8 @@ case $1 in
         fi
         ;;
     Switch)
-        new_val="$(Get_brig)"
-        readonly new_val
         if (($(Get_brig) == 0)); then
             Led_High
-            #Led_Val ${new_val}
         else
             Led_Low
         fi
