@@ -14,7 +14,6 @@ Purple="\033[1;35m" ;    Cyan_blue="\033[1;36m"
 Kernel_led_mode='/sys/devices/platform/tuxedo_keyboard/leds/rgb:kbd_backlight'
 readonly Kernel_led_mode
 
-
 #|-----|----|------------|
 #| 0   | 0  | 255   -> 蓝|
 #| 255 | 255| 0     -> 黄| 
@@ -159,7 +158,7 @@ case $1 in
     Up)
         a=$(Get_brig)
         if (($a<=255)); then
-            ((a+=5))
+            ((a+=15))
             if (($a == 255)); then
                 a=255
             else
@@ -170,12 +169,19 @@ case $1 in
     Down)
         a=$(Get_brig)
         if (($a>=0)); then
-            ((a-=5))
-            if (($a == -5)); then
+            ((a-=15))
+            if (($a == -15)); then
                 a=0
             else
                 echo $a >${Kernel_led_mode}/brightness
             fi
+        fi
+        ;;
+    Switch)
+        if (($(Get_brig) == 0)); then
+            Led_High
+        else
+            Led_Low
         fi
         ;;
     Low)
